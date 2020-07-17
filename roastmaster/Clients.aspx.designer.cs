@@ -11,7 +11,7 @@ namespace roastmaster
 {
 
 
-    public partial class WebForm1
+    public partial class WebForm2
     {
 
         /// <summary>
@@ -78,39 +78,12 @@ namespace roastmaster
         protected global::System.Web.UI.WebControls.Button Button6client;
 
         /// <summary>
-        /// CheckBox1client control.
+        /// gvClients control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1client;
-
-        /// <summary>
-        /// Expand1client control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Expand1client;
-
-        /// <summary>
-        /// CheckBoxclient2 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBoxclient2;
-
-        /// <summary>
-        /// taxexemptstatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label taxexemptstatus;
+        protected global::System.Web.UI.WebControls.GridView gvClients;
     }
 }

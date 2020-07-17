@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clients.aspx.cs" Inherits="roastmaster.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Clients.aspx.cs" Inherits="roastmaster.WebForm2" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
@@ -69,106 +71,92 @@ tr:nth-child(even) {
         <asp:Image ID="Image1client" runat="server" ImageUrl="~/Images/icons8-trash-16.png" /><br /></Button>
             <asp:Button ID="Button6client" runat="server" Text="Create Sales Order" />
         </p>
-        <table>
+       <table id="leadtable">
   <tr>
-    <th>Company Name</th>
-    <th>Contact Name</th>
-    <th>Email</th>
-    <th>Phone #</th>
-    <th>State</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td>&nbsp;<asp:CheckBox ID="CheckBox1client" runat="server" />
-&nbsp; American Financial</td>
-    <td>Scott Wheeler</td>
-    <td>scott.wheeler@afmus.com</td>
-    <td>402-429-7380</td>
-    <td>MN</td>
-    <td>no current orders
-        <a style="float: right;" id="myBtnclient";>
-            <asp:Image ID="Expand1client" runat="server" ImageUrl="~/Images/icons8-expand-arrow-16.png"/></a>
-      </td>
-    
+      <asp:GridView ID="gvClients" runat="server" AutoGenerateColumns="false" ShowFooter="false"> 
+
+          <Columns>
+            <asp:TemplateField>
+                <ItemTemplate>
+                    <asp:CheckBox ID="SelectRowC" runat="server" Checked ="false" />
+                </ItemTemplate>
+            </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="IdDisplayC" runat="server" Text='<%# Bind("Id") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField HeaderText="Company Name" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditCompanyNameC" runat="server" Text='<%# Bind("CompanyName") %>'></asp:TextBox>  
+                </EditItemTemplate>   
+                <ItemTemplate>  
+                    <asp:Image ID="hotC" runat="server" ImageUrl="~/Images/icons8-fire-16.png" Visible="False" />&nbsp;&nbsp;<asp:Label ID="CompanyNameLblC" runat="server" Text='<%# Bind("CompanyName") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Contact Name" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditContactNameC" runat="server" Text='<%# Bind("ContactName") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="ContactNamelblC" runat="server" Text='<%# Bind("ContactName") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Email" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditEmailC" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="EmaillblC" runat="server" Text='<%# Bind("Email") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Phone #" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditPhoneNumberC" runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="PhoneNumberlblC" runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="State" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditStateC" runat="server" Text='<%# Bind("State") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="StatelblC" runat="server" Text='<%# Bind("State") %>'></asp:Label>
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
+                  <ItemTemplate>
+                      <asp:ImageButton ID="Expand1C" runat="server" CssClass="expandarrow" ImageUrl="~/Images/icons8-expand-arrow-16.png" CommandName="Select" />
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="IndustryDisplayC" runat="server" Text='<%# Bind("Industry") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="RevenueRangeDisplayC" runat="server" Text='<%# Bind("RevenueRange") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="NotesDisplayC" runat="server" Text='<%# Bind("Notes") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+          </Columns>
+          
+      </asp:GridView>
+      
+
+
   </tr>
   
 </table>
 
-    <!-- The Modal -->
-<div id="myModalclient" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <table>
-  <tr>
-    <th>Company Name</th>
-    <th>Industry</th>
-    <th>Contact Name</th>
-    <th>Email</th>
-    <th>Phone #</th>
-    <th>State</th>
-    <th>Status</th>
-  </tr>
-  <tr>
-    <td>American Financial</td>
-    <td>Insurance</td>
-    <td>Scott Wheeler</td>
-    <td>scott.wheeler@afmus.com</td>
-    <td>402-429-7380</td>
-    <td>MN</td>
-    <td>no current orders</td>
-  </tr>
-  <tr>
-      <th>Address</th>
-      <th>Billing Address</th>
-      <th>Payment Method</th>
-      <th>Client Code</th>
-      <th>Terms</th>
-      <th>Sales Rep</th>
-  </tr>
-  <tr>
-      <td>400 US-169, St. Louis Park, MN 55426</td>
-      <td>400 US-169, St. Louis Park, MN 55426</td>
-      <td>Credit Card</td>
-      <td>AFMUS</td>
-      <td>n/30</td>
-      <td>Nate Wheeler</td>
-  </tr> 
-  
-</table>
-      <p></p>
-      <p><textarea>Notes</textarea>&nbsp; <asp:CheckBox ID="CheckBoxclient2" runat="server"/>&nbsp; <asp:Label ID="taxexemptstatus" runat="server" Text="Is tax exempt"></asp:Label>
-  </div>
-
-</div>
-
-<script>
-// Get the modal
-var modal = document.getElementById("myModalclient");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtnclient");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
+   
 
 </asp:Content>
