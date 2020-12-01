@@ -1,4 +1,6 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SO.aspx.cs" Inherits="roastmaster.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="SO.aspx.cs" Inherits="roastmaster.SO" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="ajaxToolkit" %>
 <asp:Content ID="Content2SO" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
@@ -61,113 +63,155 @@ tr:nth-child(even) {
         <h1>Sales Orders<asp:Label ID="Label1SO" runat="server" Text="1 Sales Order" style="float:right; font-size: small;"></asp:Label><asp:TextBox ID="TextBox2SO" runat="server" style="float:right; font-size: small;">Search</asp:TextBox><Button type="button" style="font-size: small; float: right;">
         <asp:Image ID="Image3SO" runat="server" ImageUrl="~/Images/icons8-filter-16.png" /><br /></Button></h1>
     <p style="text-align: center;">
-            <asp:Button ID="Button3SO" runat="server" Text="New Sales Order" style="float: right;"/>
-            <Button type="button">
-        <asp:Image ID="Image2SO" runat="server" ImageUrl="~/Images/icons8-edit-16.png" /><br /></Button>
-            <Button type="button">
-        <asp:Image ID="Image1SO" runat="server" ImageUrl="~/Images/icons8-trash-16.png" /><br /></Button>
+            <asp:Button ID="Button3SO" runat="server" Text="New Sales Order" style="float: right;" OnClick="Button3SO_Click"/>
+            <asp:Button ID="Button4SO" runat="server" Text="Edit" OnClick="EditSO_Click"/>
+            <asp:Button ID="Button5SO" runat="server" Text="Delete" OnClick="DeleteSO_Click"/>
             <asp:Button ID="Button6SO" runat="server" Text="Create Picking Ticket" />
         </p>
+    <table id="SOtable">
+        <tr>
+            <asp:GridView ID="gvSO" runat="server" AutoGenerateColumns="false" ShowFooter="false"> 
+                <Columns>
+                    <asp:TemplateField>
+                <ItemTemplate>
+                    <asp:CheckBox ID="SelectRowSO" runat="server" Checked ="false" />
+                </ItemTemplate>
+            </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="IdDisplaySO" runat="server" Text='<%# Bind("Id") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+            <asp:TemplateField HeaderText="SO #" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditSONumber" runat="server" Text='<%# Bind("SONumber") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="SONumberlbl" runat="server" Text='<%# Bind("SONumber") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Company Name" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditCompanyNameSO" runat="server" Text='<%# Bind("CompanyName") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="CompanyNameSOlbl" runat="server" Text='<%# Bind("CompanyName") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Custom Label" SortExpression="Name">    
+                <ItemTemplate>  
+                    <asp:Label ID="CustomLabellbl" runat="server" Text="upload"></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>
+            <asp:TemplateField HeaderText="Card" SortExpression="Name">    
+                <ItemTemplate>  
+                    <asp:Label ID="Cardlbl" runat="server" Text="upload"></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="DateDisplaySO" runat="server" Text='<%# Bind("Date") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="AddressDisplaySO" runat="server" Text='<%# Bind("Address") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="BillingAddressDisplaySO" runat="server" Text='<%# Bind("BillingAddress") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="SalesRepDisplaySO" runat="server" Text='<%# Bind("SalesRep") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="ClientCodeDisplaySO" runat="server" Text='<%# Bind("ClientCode") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="TermsDisplaySO" runat="server" Text='<%# Bind("Terms") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="PhoneNumberDisplaySO" runat="server" Text='<%# Bind("PhoneNumber") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+            <asp:TemplateField Visible="false">
+                <ItemTemplate>
+                    <asp:Label ID="EmailDisplaySO" runat="server" Text='<%# Bind("Email") %>'/>
+                </ItemTemplate>
+            </asp:TemplateField>
+                </Columns>
+            </asp:GridView>
+        </tr>
+    </table>
+
+    <asp:LinkButton ID="lnkDummySO" runat="server"></asp:LinkButton>
+    <ajaxToolkit:ModalPopupExtender ID="ModalPopupExtender4" EnableViewState="true" TargetControlID="lnkDummySO" PopupControlID="Panel4" runat="server"></ajaxToolkit:ModalPopupExtender>
+    <asp:Panel ID="Panel4" runat="server" CssClass="modal-content" Style="display: none">
+    <asp:Button ID="modalclose4" runat="server" BackColor="Red" ForeColor="White" Text="x" style="float:right" OnClick="modalclose4_Click"/>
+        <br />
         <table>
-  <tr>
-    <th>SO#</th>
-    <th>Client Code</th>
-    <th>Custom Label</th>
-    <th>Card</th>
-  </tr>
-  <tr>
-    <td>&nbsp;<asp:CheckBox ID="CheckBox1SO" runat="server" />
-&nbsp; SO#0001</td>
-    <td>AFMUS</td>
-    <td style="text-align: center;">upload</td>
-    <td style="text-align: center;">upload
-        <a style="float: right;" id="myBtnSO";>
-            <asp:Image ID="Expand1SO" runat="server" ImageUrl="~/Images/icons8-expand-arrow-16.png"/></a>
-      </td>
-    
-  </tr>
-  
-</table>
+            <tr>
+                <td>SO #</td>
+                <td>Company Name</td>
+                <td>Date</td>
+                <td>Address</td>
+                <td>Billing Address</td>
+            </tr>
+            <tr>
+                <td><asp:TextBox ID="NewSONumber" Style="width: 150px;" runat="server" Text='<%# Bind("SONumber") %>'></asp:TextBox></td>
+                <td><asp:TextBox ID="NewCompanyNameSO" Style="width: 150px;" runat="server" Text='<%# Bind("ContactName") %>'></asp:TextBox></td>
+                <td><asp:TextBox ID="NewDateSO" Type="date" Style="width: 150px;" runat="server" Text='<%# Bind("Date") %>'></asp:TextBox></td>
+                <td><asp:TextBox ID="NewAddressSO" Style="width: 150px;" runat="server" Text='<%# Bind("Address") %>'></asp:TextBox></td>
+                <td><asp:TextBox ID="NewBillingAddressSO" Style="width: 150px;" runat="server" Text='<%# Bind("BillingAddress") %>'></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>Sales Rep</td>
+                <td>Client Code</td>
+                <td>Terms</td>
+                <td>Phone Number</td>
+                <td>Email</td>
+            </tr>
+            <tr>
+                <td><asp:DropDownList ID="NewSalesRepSO" runat="server" Text='<%# Bind("SalesRep") %>'>
+                        <asp:listitem text="" value="0"></asp:listitem>
+                        <asp:listitem text="Nate Wheeler" value="1"></asp:listitem>
+                        </asp:DropDownList></td>
+                 <td><asp:TextBox ID="NewClientCodeSO" runat="server" Style="width: 60px" Text='<%# Bind("ClientCode") %>'></asp:TextBox></td>
+                 <td><asp:DropDownList ID="NewTermsSO" runat="server" Text='<%# Bind("Terms") %>'>
+                        <asp:listitem text="" value="0"></asp:listitem>
+                        <asp:listitem text="n/30" value="1"></asp:listitem>
+                        </asp:DropDownList></td>
+                <td><asp:TextBox ID="NewPhoneNumberSO" Style="width: 100px;" runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:TextBox></td>
+                <td><asp:TextBox ID="NewEmailSO" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox></td>
+            </tr>
+            <tr>
+                <td>Product #</td>
+                <td>Description</td>
+            </tr>
+            <tr>
+                <td><asp:DropDownList ID="NewProductNumberSO" runat="server" Text='<%# Bind("ProductNumber") %>'>
+                    <asp:listitem text="" value="0"></asp:listitem>
+                    <asp:listitem text="GS-03" value="1"></asp:listitem>
+            </asp:DropDownList></td>
+            <td>
+                <asp:Label ID="NewDescription" Text="N/A" runat="server"></asp:Label>
+            </td>
+            </tr>
+        </table>
+        <br />
+        <asp:Button ID="NewSOFinish" runat="server" Text="Create Sales Order" BackColor="#009933" ForeColor="White" OnClick="NewSOFinish_Click" Visible="false" />
+        <asp:Button ID="UpdateSO" runat="server" Text="Save Changes" BackColor="#009933" ForeColor="White" Visible="false" OnClick="UpdateSO_Click"/>
+    </asp:Panel>
 
-    <!-- The Modal -->
-<div id="myModalSO" class="modal">
 
-  <!-- Modal content -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <table>
-  <tr>
-    <th>SO#</th>
-    <th>Date</th>
-    <th>Client Code</th>
-    <th>Company Name</th>
-    <th>Address</th>
-    <th>Billing Address</th>
-    <th>Sales Rep</th>
-    <th>Terms</th>
-  </tr>
-  <tr>
-    <td>SO#0001</td>
-    <td>06.17.20</td>
-    <td>AFMUS</td>
-    <td>American Financial</td>
-    <td>400 US-169, St. Louis Park, MN 55426</td>
-    <td>400 US-169, St. Louis Park, MN 55426</td>
-    <td>Nate Wheeler</td>
-    <td>n/30</td>
-  </tr>
-  <tr>
-      <th>Item #</th>
-      <th>Description</th>
-      <th>Quantity</th>
-      <th>Price</th>
-      <th>Amount</th>
-  </tr>
-  <tr>
-      <td>GS-01</td>
-      <td>100% Organic Colombian Coffee - GROUND - 1 LBS</td>
-      <td>250</td>
-      <td>20.00</td>
-      <td>5,000.00</td>
-  </tr> 
-  
-</table>
-      <p></p>
-      <p>Subtotal: 5,000.00</p>
-      <p>Discount: (500.00)</p>
-      <p>Tax: 270.000</p>
-      <p>Shipping: 110.00</p>
-      <p>Total: 4,880.00</p>
-  </div>
-
-</div>
-
-<script>
-// Get the modal
-var modal = document.getElementById("myModalSO");
-
-// Get the button that opens the modal
-var btn = document.getElementById("myBtnSO");
-
-// Get the <span> element that closes the modal
-var span = document.getElementsByClassName("close")[0];
-
-// When the user clicks the button, open the modal 
-btn.onclick = function() {
-  modal.style.display = "block";
-}
-
-// When the user clicks on <span> (x), close the modal
-span.onclick = function() {
-  modal.style.display = "none";
-}
-
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function(event) {
-  if (event.target == modal) {
-    modal.style.display = "none";
-  }
-}
-</script>
 
 </asp:Content>

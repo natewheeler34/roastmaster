@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Inventory" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Inventory.aspx.cs" Inherits="roastmaster.WebForm1" %>
+﻿<%@ Page Title="Inventory" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Inventory.aspx.cs" Inherits="roastmaster.WebForm6" %>
 <asp:Content ID="ContentInv" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>

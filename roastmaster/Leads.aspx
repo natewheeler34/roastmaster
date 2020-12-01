@@ -73,8 +73,8 @@ tr:nth-child(even) {
             <asp:Button ID="Button1" runat="server" Text="Active Leads" style="float:left;" BackColor="Silver" OnClick="Button1_Click"/>
             <asp:Button ID="Button2" runat="server" Text="Inactive Leads" style="float: left" OnClick="Button2_Click" BackColor="White"/>
             <asp:Button ID="Button3" runat="server" Text="New Lead" style="float: right;" OnClick="Button3_Click"/>
-            <asp:Button ID="Button4" runat="server" Text="Mark As Inactive"/>
-            <asp:Button ID="Button5" runat="server" Text="Mark As Hot"/>
+            <asp:Button ID="Button4" runat="server" Text="Mark As Inactive" OnClick="Button4_Click"/>
+            <asp:Button ID="Button5" runat="server" Text="Mark As Hot" OnClick="Button5_Click"/>
             <asp:Button ID="edit" runat="server" Text="Edit" OnClick="edit_Click"/>
             <asp:Button ID="trash" runat="server" Text="Delete" OnClick="DeleteButton_Click"/>
             <asp:Button ID="Button6" runat="server" Text="Create Client" OnClick="Button6_Click"/>
@@ -184,32 +184,107 @@ tr:nth-child(even) {
         </asp:View>
         <asp:View ID="View2" runat="server">
 
-                    <table>
+                    <table id="inactiveleadtable">
   <tr>
-    <th>Company Name</th>
-    <th>Contact Name</th>
-    <th>Email</th>
-    <th>Phone #</th>
-    <th>State</th>
-    <th># of Times Contacted</th>
-    <th>Date of Last Contact</th>
-  </tr>
-  <tr>
-    <td>&nbsp;<asp:CheckBox ID="CheckBox2" runat="server" />
-        &nbsp; Life Sales</td>
-    <td>Tom Wade</td>
-    <td>tom.wade@lifesales.com</td>
-    <td>402-429-7380</td>
-    <td>CA</td>
-    <td>1</td>
-    <td>02/24/20
-        <a style="float: right;" id="myBtn";>
-            <asp:Image ID="Image4" runat="server" ImageUrl="~/Images/icons8-expand-arrow-16.png"/></a>
-      </td>
-    
+      <asp:GridView ID="gvInactiveLeads" runat="server" AutoGenerateColumns="false" ShowFooter="false" OnSelectedIndexChanged = "OnSelectedIndexChanged"> 
+
+          <Columns>
+            <asp:TemplateField>
+                <ItemTemplate>
+                    <asp:CheckBox ID="SelectRow2" runat="server" Checked ="false" />
+                </ItemTemplate>
+            </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="IdDisplay2" runat="server" Text='<%# Bind("Id") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField HeaderText="Company Name" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditCompanyName2" runat="server" Text='<%# Bind("CompanyName") %>'></asp:TextBox>  
+                </EditItemTemplate>   
+                <ItemTemplate>  
+                    <asp:Image ID="hot2" runat="server" ImageUrl="~/Images/icons8-fire-16.png" Visible="False" />&nbsp;&nbsp;<asp:Label ID="CompanyNameLbl2" runat="server" Text='<%# Bind("CompanyName") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Contact Name" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditContactName2" runat="server" Text='<%# Bind("ContactName") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="ContactNamelbl2" runat="server" Text='<%# Bind("ContactName") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Email" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditEmail2" runat="server" Text='<%# Bind("Email") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="Emaillbl2" runat="server" Text='<%# Bind("Email") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Phone #" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditPhoneNumber2" runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:TextBox>  
+                </EditItemTemplate>    
+                <ItemTemplate>  
+                    <asp:Label ID="PhoneNumberlbl2" runat="server" Text='<%# Bind("PhoneNumber") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="State" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditState2" runat="server" Text='<%# Bind("State") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="Statelbl2" runat="server" Text='<%# Bind("State") %>'></asp:Label>
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="# of Times Contacted" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditNumberOfTimesContacted2" runat="server" Text='<%# Bind("NumberOfTimesContacted") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="NumberOfTimesContactedlbl2" runat="server" Text='<%# Bind("NumberOfTimesContacted") %>'></asp:Label>  
+                </ItemTemplate>  
+            </asp:TemplateField>  
+              <asp:TemplateField HeaderText="Date of Last Contact" SortExpression="Name">  
+                <EditItemTemplate>  
+                    <asp:TextBox ID="EditDateOfLastContact2" runat="server" Text='<%# Bind("DateOfLastContact") %>'></asp:TextBox>  
+                </EditItemTemplate>  
+                <ItemTemplate>  
+                    <asp:Label ID="DateOfLastContactlbl2" runat="server" Text='<%# Bind("DateOfLastContact") %>'></asp:Label>
+                </ItemTemplate>  
+            </asp:TemplateField>
+              <asp:TemplateField ItemStyle-HorizontalAlign="Center" ItemStyle-VerticalAlign="Middle">
+                  <ItemTemplate>
+                      <asp:ImageButton ID="Expand12" runat="server" CssClass="expandarrow" ImageUrl="~/Images/icons8-expand-arrow-16.png" CommandName="Select" />
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="IndustryDisplay2" runat="server" Text='<%# Bind("Industry") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="RevenueRangeDisplay2" runat="server" Text='<%# Bind("RevenueRange") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+              <asp:TemplateField  Visible="false">
+                  <ItemTemplate>
+                      <asp:Label ID="NotesDisplay2" runat="server" Text='<%# Bind("Notes") %>'/>
+                  </ItemTemplate>
+              </asp:TemplateField>
+          </Columns>
+          
+      </asp:GridView>
+      
+
+
   </tr>
   
 </table>
+  
 
         </asp:View>
         </asp:MultiView>

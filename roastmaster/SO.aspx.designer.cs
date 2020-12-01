@@ -11,7 +11,7 @@ namespace roastmaster
 {
 
 
-    public partial class WebForm1
+    public partial class SO
     {
 
         /// <summary>
@@ -51,22 +51,22 @@ namespace roastmaster
         protected global::System.Web.UI.WebControls.Button Button3SO;
 
         /// <summary>
-        /// Image2SO control.
+        /// Button4SO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image2SO;
+        protected global::System.Web.UI.WebControls.Button Button4SO;
 
         /// <summary>
-        /// Image1SO control.
+        /// Button5SO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image1SO;
+        protected global::System.Web.UI.WebControls.Button Button5SO;
 
         /// <summary>
         /// Button6SO control.
@@ -78,21 +78,174 @@ namespace roastmaster
         protected global::System.Web.UI.WebControls.Button Button6SO;
 
         /// <summary>
-        /// CheckBox1SO control.
+        /// gvSO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox1SO;
+        protected global::System.Web.UI.WebControls.GridView gvSO;
 
         /// <summary>
-        /// Expand1SO control.
+        /// lnkDummySO control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Expand1SO;
+        protected global::System.Web.UI.WebControls.LinkButton lnkDummySO;
+
+        /// <summary>
+        /// ModalPopupExtender4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::AjaxControlToolkit.ModalPopupExtender ModalPopupExtender4;
+
+        /// <summary>
+        /// Panel4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel Panel4;
+
+        /// <summary>
+        /// modalclose4 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button modalclose4;
+
+        /// <summary>
+        /// NewSONumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewSONumber;
+
+        /// <summary>
+        /// NewCompanyNameSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewCompanyNameSO;
+
+        /// <summary>
+        /// NewDateSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewDateSO;
+
+        /// <summary>
+        /// NewAddressSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewAddressSO;
+
+        /// <summary>
+        /// NewBillingAddressSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewBillingAddressSO;
+
+        /// <summary>
+        /// NewSalesRepSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList NewSalesRepSO;
+
+        /// <summary>
+        /// NewClientCodeSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewClientCodeSO;
+
+        /// <summary>
+        /// NewTermsSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList NewTermsSO;
+
+        /// <summary>
+        /// NewPhoneNumberSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewPhoneNumberSO;
+
+        /// <summary>
+        /// NewEmailSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox NewEmailSO;
+
+        /// <summary>
+        /// NewProductNumberSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList NewProductNumberSO;
+
+        /// <summary>
+        /// NewDescription control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label NewDescription;
+
+        /// <summary>
+        /// NewSOFinish control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button NewSOFinish;
+
+        /// <summary>
+        /// UpdateSO control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button UpdateSO;
     }
 }

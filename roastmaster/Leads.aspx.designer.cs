@@ -150,22 +150,13 @@ namespace roastmaster
         protected global::System.Web.UI.WebControls.View View2;
 
         /// <summary>
-        /// CheckBox2 control.
+        /// gvInactiveLeads control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.CheckBox CheckBox2;
-
-        /// <summary>
-        /// Image4 control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image Image4;
+        protected global::System.Web.UI.WebControls.GridView gvInactiveLeads;
 
         /// <summary>
         /// lnkDummy control.

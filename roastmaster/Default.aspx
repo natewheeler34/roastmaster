@@ -29,7 +29,7 @@
         Picking Tickets</button>
 
 &nbsp;&nbsp;&nbsp;
-    <button style="width:125px; height:125px;" onclick="window.location.href='Products.aspx';" type="button">
+    <button style="width:125px; height:126px;" onclick="window.location.href='Products.aspx';" type="button">
         <asp:Image ID="Image5" runat="server" ImageUrl="~/Images/icons8-launch-32.png" />
         <br />
         Products</button>
@@ -83,5 +83,23 @@
         <asp:Image ID="Image13" runat="server" ImageUrl="~/Images/icons8-return-32.png" />
         <br />
         Returns</button>
+
+    &nbsp;&nbsp;&nbsp;
+    <button style="width:125px; height:125px;" type="button">
+        <asp:Image ID="Image14" runat="server" ImageUrl="~/Images/icons8-chart-32.png" />
+        <br />
+        Reports</button>
+
+    &nbsp;&nbsp;&nbsp;
+    <button style="width:125px; height:125px;" type="button">
+        <asp:Image ID="Image15" runat="server" ImageUrl="~/Images/icons8-security-pass-32.png" />
+        <br />
+        Employees</button>
+
+    &nbsp;&nbsp;&nbsp;
+    <button style="width:125px; height:125px;" type="button">
+        <asp:Image ID="Image16" runat="server" ImageUrl="~/Images/icons8-cheque-32.png" />
+        <br />
+        Payroll</button>
 
 </asp:Content>

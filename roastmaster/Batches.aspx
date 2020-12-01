@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Batches.aspx.cs" Inherits="roastmaster.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Batches.aspx.cs" Inherits="roastmaster.WebForm7" %>
 <asp:Content ID="Content2Batches" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>

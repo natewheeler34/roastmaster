@@ -130,10 +130,13 @@
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Images\icons8-box-important-32.png" />
+    <Content Include="Images\icons8-chart-32.png" />
+    <Content Include="Images\icons8-cheque-32.png" />
     <Content Include="Images\icons8-edit-16.png" />
     <Content Include="Images\icons8-expand-arrow-16.png" />
     <Content Include="Images\icons8-filter-16.png" />
     <Content Include="Images\icons8-fire-16.png" />
+    <Content Include="Images\icons8-security-pass-32.png" />
     <Content Include="Images\icons8-settings-16.png" />
     <Content Include="Images\icons8-trash-16.png" />
     <Content Include="Inventory.aspx" />

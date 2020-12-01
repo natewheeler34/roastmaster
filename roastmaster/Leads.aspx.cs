@@ -58,6 +58,22 @@ namespace roastmaster
             MultiView1.ActiveViewIndex = 1;
             Button2.BackColor = System.Drawing.Color.Silver;
             Button1.BackColor = System.Drawing.Color.White;
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM InactiveLeads", sqlCon);
+                DataTable dtbl = new DataTable();
+                sqlDa.Fill(dtbl);
+                gvInactiveLeads.DataSource = dtbl;
+                gvInactiveLeads.DataBind();
+                sqlCon.Close();
+                Label1.Text = (gvInactiveLeads.DataSource as DataTable).Rows.Count + " Inactive Leads";
+
+            }
+            Button3.Visible = false;
+            Button5.Visible = false;
+            Button4.Text = "Mark As Active";
+            Button6.Visible = false;
 
         }
 
@@ -66,6 +82,22 @@ namespace roastmaster
             MultiView1.ActiveViewIndex = 0;
             Button2.BackColor = System.Drawing.Color.White;
             Button1.BackColor = System.Drawing.Color.Silver;
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                sqlCon.Open();
+                SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM Leads", sqlCon);
+                DataTable dtbl = new DataTable();
+                sqlDa.Fill(dtbl);
+                gvLeads.DataSource = dtbl;
+                gvLeads.DataBind();
+                sqlCon.Close();
+                Label1.Text = (gvLeads.DataSource as DataTable).Rows.Count + " Leads";
+
+            }
+            Button3.Visible = true;
+            Button5.Visible = true;
+            Button4.Text = "Mark As Inactive";
+            Button6.Visible = true;
         }
 
         public void NewLeadFinish_Click(object sender, EventArgs e)
@@ -115,6 +147,87 @@ namespace roastmaster
             NewLeadFinish.Visible = true;
         }
 
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            using (SqlConnection sqlCon = new SqlConnection(connectionString))
+            {
+                var companyname = this.Panel1.FindControl("NewCompanyName") as TextBox;
+                var contactname = this.Panel1.FindControl("NewContactName") as TextBox;
+                var email = this.Panel1.FindControl("NewEmail") as TextBox;
+                var phonenumber = this.Panel1.FindControl("NewPhoneNumber") as TextBox;
+                var state = this.Panel1.FindControl("NewState") as DropDownList;
+                var numberoftimescontacted = this.Panel1.FindControl("NewNumberOfTimesContacted") as TextBox;
+                var dateoflastcontact = this.Panel1.FindControl("NewDateOfLastContact") as TextBox;
+                var industry = this.Panel1.FindControl("NewIndustry") as DropDownList;
+                var revenuerange = this.Panel1.FindControl("RevenueRange") as DropDownList;
+                var notes = this.Panel1.FindControl("Notes") as TextBox;
+                foreach (GridViewRow row in gvLeads.Rows)
+                {
+                    var chk = row.FindControl("SelectRow") as CheckBox;
+                    if (chk.Checked)
+                    {
+                        var lblID = row.FindControl("IdDisplay") as Label;
+                        SqlCommand cmd = new SqlCommand("INSERT INTO InactiveLeads(CompanyName, Industry, ContactName, Email, PhoneNumber, State, RevenueRange, Notes, NumberOfTimesContacted, DateOfLastContact) VALUES (@CompanyName, @Industry, @ContactName, @Email, @PhoneNumber, @State, @RevenueRange, @Notes, @NumberOfTimesContacted, @DateOfLastContact)", sqlCon);
+                        cmd.Parameters.AddWithValue("@CompanyName", companyname.Text);
+                        cmd.Parameters.AddWithValue("@ContactName", contactname.Text);
+                        cmd.Parameters.AddWithValue("@Email", email.Text);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", phonenumber.Text);
+                        cmd.Parameters.AddWithValue("@State", state.Text);
+                        cmd.Parameters.AddWithValue("@NumberOfTimesContacted", numberoftimescontacted.Text);
+                        cmd.Parameters.AddWithValue("@DateOfLastContact", dateoflastcontact.Text);
+                        cmd.Parameters.AddWithValue("@Industry", industry.Text);
+                        cmd.Parameters.AddWithValue("@RevenueRange", revenuerange.Text);
+                        cmd.Parameters.AddWithValue("@Notes", notes.Text);
+                        SqlCommand comm = new SqlCommand();
+                        comm.CommandText = "DELETE FROM Leads WHERE Id=@id";
+                        comm.Connection = sqlCon;
+                        comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                        sqlCon.Open();
+                        comm.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM Leads", sqlCon);
+                        DataTable dtbl = new DataTable();
+                        sqlDa.Fill(dtbl);
+                        gvLeads.DataSource = dtbl;
+                        gvLeads.DataBind();
+                        sqlCon.Close();
+                    }
+                }
+                foreach (GridViewRow row in gvInactiveLeads.Rows)
+                {
+                    var chk = row.FindControl("SelectRow2") as CheckBox;
+                    if (chk.Checked)
+                    {
+                        var lblID = row.FindControl("IdDisplay2") as Label;
+                        SqlCommand cmd = new SqlCommand("INSERT INTO Leads(CompanyName, Industry, ContactName, Email, PhoneNumber, State, RevenueRange, Notes, NumberOfTimesContacted, DateOfLastContact) VALUES (@CompanyName, @Industry, @ContactName, @Email, @PhoneNumber, @State, @RevenueRange, @Notes, @NumberOfTimesContacted, @DateOfLastContact)", sqlCon);
+                        cmd.Parameters.AddWithValue("@CompanyName", companyname.Text);
+                        cmd.Parameters.AddWithValue("@ContactName", contactname.Text);
+                        cmd.Parameters.AddWithValue("@Email", email.Text);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", phonenumber.Text);
+                        cmd.Parameters.AddWithValue("@State", state.Text);
+                        cmd.Parameters.AddWithValue("@NumberOfTimesContacted", numberoftimescontacted.Text);
+                        cmd.Parameters.AddWithValue("@DateOfLastContact", dateoflastcontact.Text);
+                        cmd.Parameters.AddWithValue("@Industry", industry.Text);
+                        cmd.Parameters.AddWithValue("@RevenueRange", revenuerange.Text);
+                        cmd.Parameters.AddWithValue("@Notes", notes.Text);
+                        SqlCommand comm = new SqlCommand();
+                        comm.CommandText = "DELETE FROM InactiveLeads WHERE Id=@id";
+                        comm.Connection = sqlCon;
+                        comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                        sqlCon.Open();
+                        comm.ExecuteNonQuery();
+                        cmd.ExecuteNonQuery();
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM InactiveLeads", sqlCon);
+                        DataTable dtbl = new DataTable();
+                        sqlDa.Fill(dtbl);
+                        gvInactiveLeads.DataSource = dtbl;
+                        gvInactiveLeads.DataBind();
+                        sqlCon.Close();
+                    }
+                }
+            }
+        }
+
 
 
 
@@ -142,7 +255,26 @@ namespace roastmaster
                         sqlCon.Close();
                     }
                 }
-                Label1.Text = (gvLeads.DataSource as DataTable).Rows.Count + " Leads";
+                foreach (GridViewRow row in gvInactiveLeads.Rows)
+                {
+                    var chk = row.FindControl("SelectRow2") as CheckBox;
+                    if (chk.Checked)
+                    {
+                        var lblID = row.FindControl("IdDisplay2") as Label;
+                        SqlCommand comm = new SqlCommand();
+                        comm.CommandText = "DELETE FROM InactiveLeads WHERE Id=@id";
+                        comm.Connection = sqlCon;
+                        comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                        sqlCon.Open();
+                        comm.ExecuteNonQuery();
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM InactiveLeads", sqlCon);
+                        DataTable dtbl = new DataTable();
+                        sqlDa.Fill(dtbl);
+                        gvInactiveLeads.DataSource = dtbl;
+                        gvInactiveLeads.DataBind();
+                        sqlCon.Close();
+                    }
+                }
             }
 
         }
@@ -233,28 +365,90 @@ namespace roastmaster
                         sqlCon.Close();
                     }
                 }
+                foreach (GridViewRow row in gvInactiveLeads.Rows)
+                {
+                    var chk = row.FindControl("SelectRow2") as CheckBox;
+                    if (chk.Checked)
+                    {
+                        var lblID = row.FindControl("IdDisplay2") as Label;
+                        var companyname = row.FindControl("CompanyNameLbl2") as Label;
+                        var contactname = row.FindControl("ContactNamelbl2") as Label;
+                        var industry = row.FindControl("IndustryDisplay2") as Label;
+                        var email = row.FindControl("Emaillbl2") as Label;
+                        var phonenumber = row.FindControl("PhoneNumberlbl2") as Label;
+                        var state = row.FindControl("Statelbl2") as Label;
+                        var numberoftimescontacted = row.FindControl("NumberOfTimesContactedlbl2") as Label;
+                        var dateoflastcontact = row.FindControl("DateOfLastContactlbl2") as Label;
+                        var revenuerange = row.FindControl("RevenueRangeDisplay2") as Label;
+                        var notes = row.FindControl("NotesDisplay2") as Label;
+                        SqlCommand comm = new SqlCommand();
+                        comm.CommandText = "SELECT * FROM InactiveLeads WHERE Id=@id";
+                        comm.Connection = sqlCon;
+                        comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                        NewCompanyName.Text = companyname.Text;
+                        NewContactName.Text = contactname.Text;
+                        if (industry == null)
+                        {
+                            NewIndustry.Text = "";
+                        }
+                        else
+                        {
+                            NewIndustry.Text = industry.Text;
+                        }
+                        NewEmail.Text = email.Text;
+                        NewPhoneNumber.Text = phonenumber.Text;
+                        if (state == null)
+                        {
+                            NewState.Text = "";
+                        }
+                        else
+                        {
+                            NewState.Text = state.Text;
+                        }
+                        NewNumberOfTimesContacted.Text = numberoftimescontacted.Text;
+                        NewDateOfLastContact.Text = dateoflastcontact.Text;
+                        if (revenuerange == null)
+                        {
+                            RevenueRange.Text = "";
+                        }
+                        else
+                        {
+                            RevenueRange.Text = revenuerange.Text;
+                        }
+                        if (notes == null)
+                        {
+                            Notes.Text = "";
+                        }
+                        else
+                        {
+                            Notes.Text = notes.Text;
+                        }
+                        sqlCon.Open();
+                        comm.ExecuteNonQuery();
+                        sqlCon.Close();
+                    }
+                }
             }
         }
 
         protected void UpdateLead_Click(object sender, EventArgs e)
         {
             ModalPopupExtender1.Hide();
-            var companyname = this.Panel1.FindControl("NewCompanyName") as TextBox;
-            var contactname = this.Panel1.FindControl("NewContactName") as TextBox;
-            var email = this.Panel1.FindControl("NewEmail") as TextBox;
-            var phonenumber = this.Panel1.FindControl("NewPhoneNumber") as TextBox;
-            var state = this.Panel1.FindControl("NewState") as DropDownList;
-            var numberoftimescontacted = this.Panel1.FindControl("NewNumberOfTimesContacted") as TextBox;
-            var dateoflastcontact = this.Panel1.FindControl("NewDateOfLastContact") as TextBox;
-            var industry = this.Panel1.FindControl("NewIndustry") as DropDownList;
-            var revenuerange = this.Panel1.FindControl("RevenueRange") as DropDownList;
-            var notes = this.Panel1.FindControl("Notes") as TextBox;
-
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
                 foreach (GridViewRow row in gvLeads.Rows)
                 {
                     var chk = row.FindControl("SelectRow") as CheckBox;
+                    var companyname = this.Panel1.FindControl("NewCompanyName") as TextBox;
+                    var contactname = this.Panel1.FindControl("NewContactName") as TextBox;
+                    var email = this.Panel1.FindControl("NewEmail") as TextBox;
+                    var phonenumber = this.Panel1.FindControl("NewPhoneNumber") as TextBox;
+                    var state = this.Panel1.FindControl("NewState") as DropDownList;
+                    var numberoftimescontacted = this.Panel1.FindControl("NewNumberOfTimesContacted") as TextBox;
+                    var dateoflastcontact = this.Panel1.FindControl("NewDateOfLastContact") as TextBox;
+                    var industry = this.Panel1.FindControl("NewIndustry") as DropDownList;
+                    var revenuerange = this.Panel1.FindControl("RevenueRange") as DropDownList;
+                    var notes = this.Panel1.FindControl("Notes") as TextBox;
                     if (chk.Checked)
                     {
                         var lblID = row.FindControl("IdDisplay") as Label;
@@ -277,12 +471,52 @@ namespace roastmaster
                         SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM Leads", sqlCon);
                         DataTable dtbl = new DataTable();
                         sqlDa.Fill(dtbl);
-                        gvLeads.DataSource = dtbl;
-                        gvLeads.DataBind();
+                        gvInactiveLeads.DataSource = dtbl;
+                        gvInactiveLeads.DataBind();
                         sqlCon.Close();
                     }
                 }
-                
+                foreach (GridViewRow row in gvInactiveLeads.Rows)
+                {
+                    var chk = row.FindControl("SelectRow2") as CheckBox;
+                    var companyname = this.Panel1.FindControl("NewCompanyName") as TextBox;
+                    var contactname = this.Panel1.FindControl("NewContactName") as TextBox;
+                    var email = this.Panel1.FindControl("NewEmail") as TextBox;
+                    var phonenumber = this.Panel1.FindControl("NewPhoneNumber") as TextBox;
+                    var state = this.Panel1.FindControl("NewState") as DropDownList;
+                    var numberoftimescontacted = this.Panel1.FindControl("NewNumberOfTimesContacted") as TextBox;
+                    var dateoflastcontact = this.Panel1.FindControl("NewDateOfLastContact") as TextBox;
+                    var industry = this.Panel1.FindControl("NewIndustry") as DropDownList;
+                    var revenuerange = this.Panel1.FindControl("RevenueRange") as DropDownList;
+                    var notes = this.Panel1.FindControl("Notes") as TextBox;
+                    if (chk.Checked)
+                    {
+                        var lblID = row.FindControl("IdDisplay2") as Label;
+                        SqlCommand cmd = new SqlCommand();
+                        cmd.CommandText = "UPDATE InactiveLeads SET CompanyName = @CompanyName, Industry = @Industry, ContactName = @ContactName, Email = @Email, PhoneNumber = @PhoneNumber, State = @State, NumberOfTimesContacted = @NumberOfTimesContacted, DateOfLastContact = @DateOfLastContact, RevenueRange = @RevenueRange, Notes = @Notes WHERE Id=@id";
+                        cmd.Connection = sqlCon;
+                        cmd.Parameters.AddWithValue("@CompanyName", companyname.Text);
+                        cmd.Parameters.AddWithValue("@ContactName", contactname.Text);
+                        cmd.Parameters.AddWithValue("@Email", email.Text);
+                        cmd.Parameters.AddWithValue("@PhoneNumber", phonenumber.Text);
+                        cmd.Parameters.AddWithValue("@State", state.Text);
+                        cmd.Parameters.AddWithValue("@NumberOfTimesContacted", numberoftimescontacted.Text);
+                        cmd.Parameters.AddWithValue("@DateOfLastContact", dateoflastcontact.Text);
+                        cmd.Parameters.AddWithValue("@Industry", industry.Text);
+                        cmd.Parameters.AddWithValue("@RevenueRange", revenuerange.Text);
+                        cmd.Parameters.AddWithValue("@Notes", notes.Text);
+                        cmd.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                        sqlCon.Open();
+                        cmd.ExecuteNonQuery();
+                        SqlDataAdapter sqlDa = new SqlDataAdapter("SELECT * FROM InactiveLeads", sqlCon);
+                        DataTable dtbl = new DataTable();
+                        sqlDa.Fill(dtbl);
+                        gvInactiveLeads.DataSource = dtbl;
+                        gvInactiveLeads.DataBind();
+                        sqlCon.Close();
+                    }
+                }
+
                 //Label1.Text = (gvLeads.DataSource as DataTable).Rows.Count + " Leads";
             }
         }
@@ -303,34 +537,68 @@ namespace roastmaster
             Notes.Enabled = false;
             using (SqlConnection sqlCon = new SqlConnection(connectionString))
             {
-                var lblID = this.gvLeads.SelectedRow.FindControl("IdDisplay") as Label;
-                var companyname = this.gvLeads.SelectedRow.FindControl("CompanyNameLbl") as Label;
-                var contactname = this.gvLeads.SelectedRow.FindControl("ContactNamelbl") as Label;
-                var industry = this.gvLeads.SelectedRow.FindControl("IndustryDisplay") as Label;
-                var email = this.gvLeads.SelectedRow.FindControl("Emaillbl") as Label;
-                var phonenumber = this.gvLeads.SelectedRow.FindControl("PhoneNumberlbl") as Label;
-                var state = this.gvLeads.SelectedRow.FindControl("Statelbl") as Label;
-                var numberoftimescontacted = this.gvLeads.SelectedRow.FindControl("NumberOfTimesContactedlbl") as Label;
-                var dateoflastcontact = this.gvLeads.SelectedRow.FindControl("DateOfLastContactlbl") as Label;
-                var revenuerange = this.gvLeads.SelectedRow.FindControl("RevenueRangeDisplay") as Label;
-                var notes = this.gvLeads.SelectedRow.FindControl("NotesDisplay") as Label;
-                SqlCommand comm = new SqlCommand();
-                comm.CommandText = "SELECT * FROM Leads WHERE Id=@id";
-                comm.Connection = sqlCon;
-                comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
-                NewCompanyName.Text = companyname.Text;
-                NewContactName.Text = contactname.Text;
-                NewIndustry.Text = industry.Text;
-                NewEmail.Text = email.Text;
-                NewPhoneNumber.Text = phonenumber.Text;
-                NewState.Text = state.Text;
-                NewNumberOfTimesContacted.Text = numberoftimescontacted.Text;
-                NewDateOfLastContact.Text = dateoflastcontact.Text;
-                RevenueRange.Text = revenuerange.Text;
-                Notes.Text = notes.Text;
-                sqlCon.Open();
-                comm.ExecuteNonQuery();
-                sqlCon.Close();
+                foreach (GridViewRow row in gvLeads.Rows)
+                {
+                    var lblID = this.gvLeads.SelectedRow.FindControl("IdDisplay") as Label;
+                    var companyname = this.gvLeads.SelectedRow.FindControl("CompanyNameLbl") as Label;
+                    var contactname = this.gvLeads.SelectedRow.FindControl("ContactNamelbl") as Label;
+                    var industry = this.gvLeads.SelectedRow.FindControl("IndustryDisplay") as Label;
+                    var email = this.gvLeads.SelectedRow.FindControl("Emaillbl") as Label;
+                    var phonenumber = this.gvLeads.SelectedRow.FindControl("PhoneNumberlbl") as Label;
+                    var state = this.gvLeads.SelectedRow.FindControl("Statelbl") as Label;
+                    var numberoftimescontacted = this.gvLeads.SelectedRow.FindControl("NumberOfTimesContactedlbl") as Label;
+                    var dateoflastcontact = this.gvLeads.SelectedRow.FindControl("DateOfLastContactlbl") as Label;
+                    var revenuerange = this.gvLeads.SelectedRow.FindControl("RevenueRangeDisplay") as Label;
+                    var notes = this.gvLeads.SelectedRow.FindControl("NotesDisplay") as Label;
+                    SqlCommand comm = new SqlCommand();
+                    comm.CommandText = "SELECT * FROM Leads WHERE Id=@id";
+                    comm.Connection = sqlCon;
+                    comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                    NewCompanyName.Text = companyname.Text;
+                    NewContactName.Text = contactname.Text;
+                    NewIndustry.Text = industry.Text;
+                    NewEmail.Text = email.Text;
+                    NewPhoneNumber.Text = phonenumber.Text;
+                    NewState.Text = state.Text;
+                    NewNumberOfTimesContacted.Text = numberoftimescontacted.Text;
+                    NewDateOfLastContact.Text = dateoflastcontact.Text;
+                    RevenueRange.Text = revenuerange.Text;
+                    Notes.Text = notes.Text;
+                    sqlCon.Open();
+                    comm.ExecuteNonQuery();
+                    sqlCon.Close();
+                }
+                foreach (GridViewRow row in gvInactiveLeads.Rows)
+                {
+                    var lblID = this.gvInactiveLeads.SelectedRow.FindControl("IdDisplay2") as Label;
+                    var companyname = this.gvInactiveLeads.SelectedRow.FindControl("CompanyNameLbl2") as Label;
+                    var contactname = this.gvInactiveLeads.SelectedRow.FindControl("ContactNamelbl2") as Label;
+                    var industry = this.gvInactiveLeads.SelectedRow.FindControl("IndustryDisplay2") as Label;
+                    var email = this.gvInactiveLeads.SelectedRow.FindControl("Emaillbl2") as Label;
+                    var phonenumber = this.gvInactiveLeads.SelectedRow.FindControl("PhoneNumberlbl2") as Label;
+                    var state = this.gvInactiveLeads.SelectedRow.FindControl("Statelbl2") as Label;
+                    var numberoftimescontacted = this.gvInactiveLeads.SelectedRow.FindControl("NumberOfTimesContactedlbl2") as Label;
+                    var dateoflastcontact = this.gvInactiveLeads.SelectedRow.FindControl("DateOfLastContactlbl2") as Label;
+                    var revenuerange = this.gvInactiveLeads.SelectedRow.FindControl("RevenueRangeDisplay2") as Label;
+                    var notes = this.gvInactiveLeads.SelectedRow.FindControl("NotesDisplay2") as Label;
+                    SqlCommand comm = new SqlCommand();
+                    comm.CommandText = "SELECT * FROM InactiveLeads WHERE Id=@id";
+                    comm.Connection = sqlCon;
+                    comm.Parameters.AddWithValue("@id", int.Parse(lblID.Text));
+                    NewCompanyName.Text = companyname.Text;
+                    NewContactName.Text = contactname.Text;
+                    NewIndustry.Text = industry.Text;
+                    NewEmail.Text = email.Text;
+                    NewPhoneNumber.Text = phonenumber.Text;
+                    NewState.Text = state.Text;
+                    NewNumberOfTimesContacted.Text = numberoftimescontacted.Text;
+                    NewDateOfLastContact.Text = dateoflastcontact.Text;
+                    RevenueRange.Text = revenuerange.Text;
+                    Notes.Text = notes.Text;
+                    sqlCon.Open();
+                    comm.ExecuteNonQuery();
+                    sqlCon.Close();
+                }
             }
 
         }
@@ -382,6 +650,11 @@ namespace roastmaster
                     }
                 }
             }
+        }
+
+        protected void Button5_Click(object sender, EventArgs e)
+        {
+
         }
     }  
 

@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pack.aspx.cs" Inherits="roastmaster.WebForm1" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeBehind="Pack.aspx.cs" Inherits="roastmaster.WebForm8" %>
 <asp:Content ID="Content2Pack" ContentPlaceHolderID="MainContent" runat="server">
 
     <style>
